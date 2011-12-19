@@ -1,3 +1,8 @@
+SYNOPSIS
+
+A simple script to add certificates to the Android Certificate Store.
+
+
 HOWTO
 
 1) copy cacerts.bks to sdcard
