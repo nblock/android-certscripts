@@ -1,5 +1,5 @@
 #!/bin/bash
-# A simple script to add certificates to the Android certificate Store
+# A simple script to add certificates to the Android certificate store
 # author: notizblock <nblock@archlinux.us>
 # license: GPLv3
 
