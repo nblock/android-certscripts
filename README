@@ -1,20 +1,9 @@
 SYNOPSIS
 
-A simple script to add certificates to the Android certificate store.
-
+A simple script to add ca-certificates to the Android certificate store.
 
 HOWTO
-
-1) copy cacerts.bks to sdcard
-android:~ cp /system/etc/security/cacerts.bks /sdcard
-
-2) execute add-certs-to-store.sh
-
-3) deploy the updated cacerts.bks
-android:~ su
-android:~ mount -o rw,remount /system
-android:~ cp /sdcard/cacerts.bks /system/etc/security/cacerts.bks
-android:~ mount -o ro,remount /system
-android:~ rm /sdcard/cacerts.bks
-
+1) install adb
+2) connect your phone with USB debugging enabled
+3) execute add-certs-to-store.sh
 4) reboot the phone

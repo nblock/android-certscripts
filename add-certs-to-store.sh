@@ -14,24 +14,24 @@ FILE=cacerts.bks
 function add_cert {
   keytool -keystore "$1" -storetype BKS\
     -provider org.bouncycastle.jce.provider.BouncyCastleProvider\
-    -storepass changeit -importcert -trustcacerts\
+    -storepass changeit -importcert -noprompt -trustcacerts\
     -alias "$2"\
     -file "$3" 
 }
 
-#check args
-if [ $# -ne 1 ]; then
-  echo "Usage: `basename $0` /path/to/mounted/android-sdcard" && exit 1
-fi
-
-#check if cacerts.bks is writeable
-ABS_FILE="$1/$FILE"
-if [ ! -w "$ABS_FILE" ]; then
-  echo "The file '${ABS_FILE} is not writeable. Please make sure that the file is writeable." && exit 1
-fi
+#get cert store from phone
+adb pull /system/etc/security/cacerts.bks
 
 #do the work
 count=${#CERT_FILES[@]}
 for i in `seq 1 $count`;do
-  add_cert "${ABS_FILE}" "${CERT_ALIAS[$i-1]}" "${CERT_FILES[$i-1]}"
+  add_cert "${FILE}" "${CERT_ALIAS[$i-1]}" "${CERT_FILES[$i-1]}"
 done
+
+#push cert store back to phone
+adb shell busybox mount -o remount,rw /system
+adb push cacerts.bks /system/etc/security
+adb shell busybox mount -o remount,ro /system
+
+#clean up
+rm -rf $FILE
